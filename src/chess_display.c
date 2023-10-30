@@ -42,16 +42,26 @@ void display_game(const char *pgn) {
     Chessboard chessboard;
     initialize_board(&chessboard);
 
-    // Split the PGN by spaces to get individual moves
-    char *move = strtok(pgn, " ");
-    while (move != NULL) {
-        printf("Move: %s\n", move);
-        apply_move(&chessboard, move);
+    // Split the PGN by spaces to get individual moves or move numbers
+    char *token = strtok(pgn, " ");
+
+    while (token != NULL) {
+        // Check if the token is a move number (ends with a period)
+        int len = strlen(token);
+        if (token[len - 1] == '.') {
+            printf("%s ", token);
+            token = strtok(NULL, " ");  // get the next token
+            continue;  // skip to next iteration
+        }
+
+        printf("Move: %s\n", token);
+        apply_move(&chessboard, token);
         display_board(&chessboard);
 
-        move = strtok(NULL, " ");
+        token = strtok(NULL, " ");
     }
 }
+
 
 int main() {
     char sample_pgn[] = "1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5";  // Example PGN
