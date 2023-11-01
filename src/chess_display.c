@@ -16,17 +16,6 @@ void initialize_board(Chessboard *chessboard) {
     memcpy(chessboard->board, initial_board, sizeof(initial_board));
 }
 
-void display_board(Chessboard *chessboard) {
-    printf("\n");
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            printf("%c ", chessboard->board[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
 void display_game(const char *pgn) {
     Chessboard chessboard;
     initialize_board(&chessboard);
