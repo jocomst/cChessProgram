@@ -1,18 +1,14 @@
-// chess_pieces.h
+typedef enum {
+    PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING
+} PieceType;
 
 typedef enum {
-    WHITE,
-    BLACK
-} PawnColor;
+    WHITE, BLACK
+} PieceColor;
 
 typedef struct {
-    int x;
-    int y;
-} Position;
-
-typedef struct {
-    PawnColor color;
-    Position position;
+    PieceType type;
+    PieceColor color;
     bool hasMoved;
-    bool isEnPassantEligible;
-} Pawn;
+    // ... other attributes
+} Piece;
