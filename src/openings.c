@@ -5,6 +5,6 @@ ChessOpening knownOpenings[] = {
 	// ... my openings data
 };
 
-const ChessOpening* findOpening(const chat* moves) {
+const ChessOpening* findOpening(const char* moves) {
 	// ... implementation
 }
