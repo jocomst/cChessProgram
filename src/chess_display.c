@@ -26,12 +26,15 @@ typedef struct {
 } Chessboard;
 
 void display_board(const Chessboard *chessboard) {
+    printf("\n");
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            print_piece(chessboard->board[i][j]);
+            printf("%c ", chessboard->board[i][j]);
         }
         printf("\n");
     }
+    printf("\n");
+
 }
 
 void initialize_board(Chessboard *chessboard) {
@@ -52,7 +55,7 @@ void initialize_board(Chessboard *chessboard) {
 void display_game(const char *pgn) {
     Chessboard chessboard;
     initialize_board(&chessboard);
-    display_board(&chessboard);
+    // display_board(&chessboard);
     // ... (rest of the function)
 }
 
