@@ -6,8 +6,8 @@
 
 // ANSI color codes
 #define RESET_COLOR "\033[0m"
-#define WHITE_PIECE_COLOR "\033[37m" // White color
-#define BLACK_PIECE_COLOR "\033[30m" // Black color
+#define WHITE_PIECE_COLOR "\033[34m" // Blue color
+#define BLACK_PIECE_COLOR "\033[31m" // Red color
 
 void print_piece(char piece) {
     if (piece >= 'A' && piece <= 'Z') {
