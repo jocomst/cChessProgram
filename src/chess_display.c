@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
+
+#include "chess_game_state.h"
 
 // ANSI color codes
 #define RESET_COLOR "\033[0m"
@@ -21,35 +24,38 @@ void print_piece(char piece) {
 
 #define BOARD_SIZE 8  // Assuming you have defined BOARD_SIZE
 
-typedef struct {
-    char board[BOARD_SIZE][BOARD_SIZE];
-} Chessboard;
 
 void display_board(const Chessboard *chessboard) {
     printf("\n");
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            printf("%c ", chessboard->board[i][j]);
+            print_piece(chessboard->board[i][j].piece); // Use print_piece to display each piece
+            printf(" ");
         }
         printf("\n");
     }
     printf("\n");
-
 }
 
 void initialize_board(Chessboard *chessboard) {
-    char initial_board[BOARD_SIZE][BOARD_SIZE] = {
-        {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'},
-        {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
-        {'_', '_', '_', '_', '_', '_', '_', '_'},
-        {'_', '_', '_', '_', '_', '_', '_', '_'},
-        {'_', '_', '_', '_', '_', '_', '_', '_'},
-        {'_', '_', '_', '_', '_', '_', '_', '_'},
-        {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
-        {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'}
-    };
+    // Loop through each square on the board
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            // Set default empty square values
+            chessboard->board[i][j].piece = '_';
+            chessboard->board[i][j].is_occupied = false;
 
-    memcpy(chessboard->board, initial_board, sizeof(initial_board));
+            // Set up pieces for the initial chess configuration
+            if (i == 0 || i == 7) {  // Rooks, knights, bishops, queen, and king
+                char pieces[] = {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'};
+                chessboard->board[i][j].piece = (i == 0) ? pieces[j] : toupper(pieces[j]);
+                chessboard->board[i][j].is_occupied = true;
+            } else if (i == 1 || i == 6) {  // Pawns
+                chessboard->board[i][j].piece = (i == 1) ? 'p' : 'P';
+                chessboard->board[i][j].is_occupied = true;
+            }
+        }
+    }
 }
 
 void display_game(const char *pgn) {
