@@ -1,11 +1,7 @@
 #ifndef CHESS_DISPLAY_H
 #define CHESS_DISPLAY_H
 
-#define BOARD_SIZE 8
-
-typedef struct {
-    char board[BOARD_SIZE][BOARD_SIZE];
-} Chessboard;
+#include "chess_game_state.h"
 
 // Function declarations
 void initialize_board(Chessboard *chessboard);
