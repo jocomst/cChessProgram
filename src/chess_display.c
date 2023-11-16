@@ -8,6 +8,7 @@
 #define RESET_COLOR "\033[0m"
 #define WHITE_PIECE_COLOR "\033[34m" // Blue color
 #define BLACK_PIECE_COLOR "\033[31m" // Red color
+#define BOARD_SIZE 8  // Assuming you have defined BOARD_SIZE
 
 void print_piece(char piece) {
     if (piece >= 'A' && piece <= 'Z') {
@@ -22,8 +23,11 @@ void print_piece(char piece) {
     }
 }
 
-#define BOARD_SIZE 8  // Assuming you have defined BOARD_SIZE
-
+void set_square_notation(Square *square, int row, int col) {
+    square->notation[0] = 'a' + col; // Column letter (lowercase)
+    square->notation[1] = '1' + (BOARD_SIZE - 1 - row); // Row number
+    square->notation[2] = '\0';    // Null-terminator
+}
 
 void display_board(const Chessboard *chessboard) {
     printf("\n");
@@ -44,6 +48,9 @@ void initialize_board(Chessboard *chessboard) {
             // Set default empty square values
             chessboard->board[i][j].piece = '_';
             chessboard->board[i][j].is_occupied = false;
+            
+            // Set the notation for each square
+            set_square_notation(&chessboard->board[i][j], i, j);
 
             // Set up pieces for the initial chess configuration
             if (i == 0 || i == 7) {  // Rooks, knights, bishops, queen, and king
