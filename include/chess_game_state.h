@@ -7,6 +7,7 @@
 typedef struct {
     char piece;
     bool is_occupied;
+    char notation[3];  // Additional attribute to store chess notation
     // Additional attributes here
 } Square;
 
