@@ -30,16 +30,37 @@ void set_square_notation(Square *square, int row, int col) {
 }
 
 void display_board(const Chessboard *chessboard) {
+    // Display column headers
+    printf("   ");  // Add extra space for alignment
+    for (int col = 0; col < BOARD_SIZE; col++) {
+        printf("%c ", 'a' + col);  // Add space after each column letter
+    }
     printf("\n");
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            print_piece(chessboard->board[i][j].piece); // Use print_piece to display each piece
-            printf(" ");
+
+    // Display each row
+    for (int row = 0; row < BOARD_SIZE; row++) {
+        // Display row number at the start with a space for alignment
+        printf("%d ", BOARD_SIZE - row);
+
+        // Display pieces with spaces
+        for (int col = 0; col < BOARD_SIZE; col++) {
+            printf(" ");  // Print a space before each piece for alignment
+            print_piece(chessboard->board[row][col].piece);
         }
-        printf("\n");
+
+        // Display row number at the end with a newline
+        printf(" %d\n", BOARD_SIZE - row);
+    }
+
+    // Display column headers again
+    printf("   ");  // Add extra space for alignment
+    for (int col = 0; col < BOARD_SIZE; col++) {
+        printf("%c ", 'a' + col);  // Add space after each column letter
     }
     printf("\n");
 }
+
+
 
 void initialize_board(Chessboard *chessboard) {
     // Loop through each square on the board
