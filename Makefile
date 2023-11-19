@@ -8,11 +8,17 @@ CFLAGS = -Iinclude
 SRC_DIR = src
 BIN_DIR = bin
 INCLUDE_DIR = include
+TEST_DIR = tests
 
 # Source and object files
-SOURCES = $(SRC_DIR)/chess_display.c $(SRC_DIR)/chess_logic.c $(SRC_DIR)/chess_reader.c $(SRC_DIR)/main.c $(SRC_DIR)/openings.c
+SOURCES = $(wildcard $(SRC_DIR)/*.c)
 OBJECTS = $(SOURCES:.c=.o)
 EXECUTABLE = $(BIN_DIR)/chess-pgn-reader
+
+# Test sources and objects
+TEST_SOURCES = $(wildcard $(TEST_DIR)/*.c)
+TEST_OBJECTS = $(TEST_SOURCES:.c=.o)
+TEST_EXECUTABLES = $(TEST_SOURCES:$(TEST_DIR)/%.c=$(BIN_DIR)/%)
 
 # Default target
 all: $(EXECUTABLE)
@@ -25,9 +31,24 @@ $(EXECUTABLE): $(OBJECTS)
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Test targets
+.PHONY: tests
+tests: $(TEST_EXECUTABLES)
+
+$(BIN_DIR)/%: $(TEST_DIR)/%.c
+	$(CC) $(CFLAGS) -o $@ $< -lcunit
+
+# Running tests
+.PHONY: run-tests
+run-tests: tests
+	@echo "Running tests..."
+	@for test in $(TEST_EXECUTABLES); do \
+		./$$test; \
+	done
+
 # Cleaning up
 clean:
-	rm -f $(SRC_DIR)/*.o $(EXECUTABLE)
+	rm -f $(SRC_DIR)/*.o $(EXECUTABLE) $(TEST_OBJECTS) $(TEST_EXECUTABLES)
 
 # Phony targets
 .PHONY: all clean
