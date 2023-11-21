@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Iinclude
+CFLAGS = -Iinclude -g # Added -g flag for debugging symbols
 
 # Directories
 SRC_DIR = src
@@ -46,9 +46,15 @@ run-tests: tests
 		./$$test; \
 	done
 
+# Debugging with gdb
+.PHONY: debug
+debug: $(EXECUTABLE)
+	gdb $(EXECUTABLE)
+
 # Cleaning up
 clean:
 	rm -f $(SRC_DIR)/*.o $(EXECUTABLE) $(TEST_OBJECTS) $(TEST_EXECUTABLES)
 
 # Phony targets
-.PHONY: all clean
+.PHONY: all clean debug
+
