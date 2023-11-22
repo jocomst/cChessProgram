@@ -43,6 +43,9 @@ typedef struct {
     GameStatus status;
 } GameState;
 
+// Function to initialize the game state
+void initialize_game_state(GameState *gs);
+
 // Function declarations for initializing, updating game state...
 
 #endif // CHESS_GAME_STATE_H
