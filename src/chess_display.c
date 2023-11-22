@@ -40,7 +40,10 @@ void set_square_notation(Square *square, int row, int col) {
     square->notation[2] = '\0';    // Null-terminator
 }
 
-void display_board(const Chessboard *chessboard) {
+void display_board(const GameState *gameState) {
+
+    const Chessboard *chessboard = &(gameState->chessboard);
+
     // Display column headers
     printf("   ");  // Add extra space for alignment
     for (int col = 0; col < BOARD_SIZE; col++) {
