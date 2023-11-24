@@ -75,8 +75,10 @@ void display_board(const GameState *gameState) {
 }
 
 void display_game(const char *pgn) {
+    GameState gameState;
     Chessboard chessboard;
     initialize_board(&chessboard);
+    initialize_game_state(&gameState);
     // display_board(&chessboard);
     // ... (rest of the function)
 }

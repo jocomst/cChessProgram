@@ -27,3 +27,11 @@ void initialize_board(Chessboard *chessboard) {
 
 // Additional functions related to the game state can be added here
 
+void initialize_game_state(GameState *gs) {
+    // Initialize the player, status, and other elements of GameState
+    gs->currentPlayer = WHITE; // Example initialization
+    gs->status = ONGOING;
+    initialize_board(&(gs->chessboard)); // Initialize the board as well
+    // ... Any other initialization code ...
+}
+
