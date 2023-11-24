@@ -43,6 +43,8 @@ typedef struct {
     GameStatus status;
 } GameState;
 
+void initialize_board(Chessboard *chessboard);
+
 // Function to initialize the game state
 void initialize_game_state(GameState *gs);
 

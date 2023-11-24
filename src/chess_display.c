@@ -74,35 +74,6 @@ void display_board(const GameState *gameState) {
     printf("\n");
 }
 
-
-
-void initialize_board(Chessboard *chessboard) {
-    // Loop through each square on the board
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            // Initialize as empty square
-            chessboard->board[i][j].piece.type = EMPTY;
-            chessboard->board[i][j].piece.color = NONE;
-
-            // Set the notation for each square
-            set_square_notation(&chessboard->board[i][j], i, j);
-        }
-    }
-
-    // Set up pieces for the initial chess configuration
-    // Rooks, knights, bishops, queen, and king
-    PieceType initialRowPieces[BOARD_SIZE] = {ROOK, KNIGHT, BISHOP, QUEEN, KING, BISHOP, KNIGHT, ROOK};
-    for (int j = 0; j < BOARD_SIZE; j++) {
-        // Set pieces for white (row 0) and black (row 7)
-        chessboard->board[0][j].piece = (ChessPiece){initialRowPieces[j], WHITE};
-        chessboard->board[7][j].piece = (ChessPiece){initialRowPieces[j], BLACK};
-
-        // Set pawns for white (row 1) and black (row 6)
-        chessboard->board[1][j].piece = (ChessPiece){PAWN, WHITE};
-        chessboard->board[6][j].piece = (ChessPiece){PAWN, BLACK};
-    }
-}
-
 void display_game(const char *pgn) {
     Chessboard chessboard;
     initialize_board(&chessboard);
