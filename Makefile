@@ -12,20 +12,21 @@ TEST_DIR = tests
 
 # Source and object files
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
-OBJECTS = $(filter-out $(SRC_DIR)/main.o, $(SOURCES:.c=.o))
+OBJECTS = $(filter-out $(MAIN_OBJECT), $(SOURCES:.c=.o))
 EXECUTABLE = $(BIN_DIR)/chess-pgn-reader
+MAIN_OBJECT = $(SRC_DIR)/main.o
 
 # Test sources and objects
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.c)
 TEST_OBJECTS = $(TEST_SOURCES:.c=.o)
-TEST_EXECUTABLES = $(TEST_SOURCES:$(TEST_DIR)/%.c=$(BIN_DIR)/%)
+TEST_EXECUTABLES = $(patsubst $(TEST_DIR)/%.c,$(BIN_DIR)/%,$(TEST_SOURCES))
 
 # Default target
 all: $(EXECUTABLE)
 
 # Linking the executable
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@
+$(EXECUTABLE): $(OBJECTS) $(MAIN_OBJECT)
+	$(CC) $(CFLAGS) $^ -o $@
 
 # Compiling source files
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
@@ -35,15 +36,16 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 .PHONY: tests
 tests: $(TEST_EXECUTABLES)
 
+# Linking the test executables
 $(BIN_DIR)/%: $(TEST_DIR)/%.o $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $^ -lcunit
+	$(CC) $(CFLAGS) $^ -o $@ -lcunit
 
 # Running tests
 .PHONY: run-tests
 run-tests: tests
 	@echo "Running tests..."
 	@for test in $(TEST_EXECUTABLES); do \
-		./$$test; \
+	        ./$$test; \
 	done
 
 # Debugging with gdb
@@ -53,8 +55,8 @@ debug: $(EXECUTABLE)
 
 # Cleaning up
 clean:
-	rm -f $(SRC_DIR)/*.o $(EXECUTABLE) $(TEST_OBJECTS) $(TEST_EXECUTABLES)
+	rm -f $(SRC_DIR)/*.o $(BIN_DIR)/* $(TEST_DIR)/*.o
 
 # Phony targets
-.PHONY: all clean debug
+.PHONY: all clean debug run-tests
 
