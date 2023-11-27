@@ -12,3 +12,14 @@ void start_game_loop(GameState *gameState) {
     // Display end of game message
 }
 
+bool prompt_start_game() {
+    printf("Press 's' to start the game or 'q' to quit: ");
+    char input[100];
+    if (fgets(input, sizeof(input), stdin)) {
+        if (input[0] == 's' || input[0] == 'S') {
+            return true;
+        }
+    }
+    return false;
+}
+
