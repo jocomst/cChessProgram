@@ -12,7 +12,7 @@ TEST_DIR = tests
 
 # Source and object files
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(filter-out $(SRC_DIR)/main.o, $(SOURCES:.c=.o))
 EXECUTABLE = $(BIN_DIR)/chess-pgn-reader
 
 # Test sources and objects
@@ -35,8 +35,8 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 .PHONY: tests
 tests: $(TEST_EXECUTABLES)
 
-$(BIN_DIR)/%: $(TEST_DIR)/%.c
-	$(CC) $(CFLAGS) -o $@ $< -lcunit
+$(BIN_DIR)/%: $(TEST_DIR)/%.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^ -lcunit
 
 # Running tests
 .PHONY: run-tests
