@@ -40,13 +40,18 @@ tests: $(TEST_EXECUTABLES)
 $(BIN_DIR)/%: $(TEST_DIR)/%.o $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit
 
-# Running tests
-.PHONY: run-tests
-run-tests: tests
-	@echo "Running tests..."
+# Running a specific test or all tests if no specific test is provided
+.PHONY: run-test
+run-test: $(TEST_EXECUTABLES)
+ifdef TEST
+	echo "Running specific test: $(TEST)"
+	@./$(BIN_DIR)/$(TEST)
+else
+	@echo "Running all tests..."
 	@for test in $(TEST_EXECUTABLES); do \
-	        ./$$test; \
+	./$$test; \
 	done
+    endif
 
 # Debugging with gdb
 .PHONY: debug
