@@ -10,7 +10,7 @@ int main() {
     initialize_board(&chessboard); 
     display_board(&chessboard);     // This function is still in the chess_display.c file
     initialize_game_state(&gameState);
-    start_game_loop(&gameState);
+    prompt_start_game(&gameState);
 
     return 0;
 }
