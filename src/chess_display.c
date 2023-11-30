@@ -99,7 +99,14 @@ void display_intro_screen() {
     printf("\033[H\033[J");
 
     // Print ASCII art here. Replace the following with your actual ASCII art.
-    printf("Your ASCII Art Here\n");
+    printf("    _____ _    _ ______  _____ _____ _      _____ \n");
+    printf("  / ____| |  | |  ____|/ ____/ ____| |    |_   _|\n");
+    printf(" | |    | |__| | |__  | (___| (___ | |      | |  \n");
+    printf(" | |    |  __  |  __|  \\___ \\\\___ \\| |      | |  \n");
+    printf(" | |____| |  | | |____ ____) |___) | |____ _| |_ \n");
+    printf("  \\_____|_|  |_|______|_____/_____/|______|_____|\n");
+    printf("                                                 \n");
+    printf("                                                  \n");
 
     // Print game start prompt
     printf("\nPress 's' to start the game or 'q' to quit:\n");
