@@ -93,3 +93,14 @@ void display_text(const char* text, int line_number) {
     // Output the new text
     printf("%s", text);
 }
+
+void display_intro_screen() {
+    // Clear the screen
+    printf("\033[H\033[J");
+
+    // Print ASCII art here. Replace the following with your actual ASCII art.
+    printf("Your ASCII Art Here\n");
+
+    // Print game start prompt
+    printf("\nPress 's' to start the game or 'q' to quit:\n");
+}
