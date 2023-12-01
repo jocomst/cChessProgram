@@ -14,26 +14,23 @@ void start_game_loop(GameState *gameState) {
     // Display end of game message
 }
 
-void prompt_start_game(GameState *gameState) {
+bool prompt_start_game(GameState *gameState) {
     printf("Press 's' to start the game or 'q' to quit: ");
     char input[100];
     if (fgets(input, sizeof(input), stdin)) {
         if (tolower(input[0]) == 's') {
-            // If 's' is pressed, start the game loop
-            start_game_loop(gameState);
+            return true; // User chose to start the game
         } else if (tolower(input[0]) == 'q') {
-            // If 'q' is pressed, exit the game
-            printf("Game not started. Exiting...\n");
-            exit(EXIT_SUCCESS);
+            return false; // User chose to quit the game
         } else {
             // If any other input is given, prompt again
             printf("Invalid input. Please try again.\n");
-            prompt_start_game(gameState);
+            return prompt_start_game(gameState); // Be cautious of potential stack overflow due to recursion
         }
     } else {
-        // If input fails, exit the game
-        printf("Error reading input. Exiting...\n");
-        exit(EXIT_FAILURE);
+        // If input fails, treat as a quit command
+        printf("Error reading input.\n");
+        return false;
     }
 }
 

@@ -5,7 +5,7 @@
 #include "chess_game_state.h"
 
 // Function to prompt the user to start the game
-void prompt_start_game(GameState *gameState);
+bool prompt_start_game(GameState *gameState);
 
 void start_game_loop(GameState *gameState);
 
