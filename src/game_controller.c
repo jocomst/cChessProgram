@@ -21,6 +21,7 @@ bool prompt_start_game(GameState *gameState) {
         printf("Press 's' to start the game or 'q' to quit: ");
         if (fgets(input, sizeof(input), stdin)) {
             if (tolower(input[0]) == 's') {
+                printf("\033[H\033[J");  // Clear the screen
                 return true;  // User chose to start the game
             } else if (tolower(input[0]) == 'q') {
                 return false;  // User chose to quit the game
@@ -34,5 +35,6 @@ bool prompt_start_game(GameState *gameState) {
         }
     }
 }
+
 
 
