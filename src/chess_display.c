@@ -107,7 +107,4 @@ void display_intro_screen() {
     printf("  \\_____|_|  |_|______|_____/_____/|______|_____|\n");
     printf("                                                 \n");
     printf("                                                  \n");
-
-    // Print game start prompt
-    printf("\nPress 's' to start the game or 'q' to quit:\n");
 }
