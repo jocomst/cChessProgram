@@ -9,11 +9,13 @@
 
 // Define your test functions
 void test_prompt_start_game(void) {
+    GameState testGameState;
+
     // Redirect stdin to a buffer with the simulated input
     FILE *input_stream = fmemopen("s", 1, "r");
     stdin = input_stream;
 
-    bool start = prompt_start_game();
+    bool start = prompt_start_game(&testGameState);
 
     // Assert that the function returns true when 's' is the input
     assert(start == true);

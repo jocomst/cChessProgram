@@ -42,16 +42,16 @@ $(BIN_DIR)/%: $(TEST_DIR)/%.o $(OBJECTS)
 
 # Running a specific test or all tests if no specific test is provided
 .PHONY: run-test
-run-test: $(TEST_EXECUTABLES)
-ifdef TEST
-	echo "Running specific test: $(TEST)"
-	@./$(BIN_DIR)/$(TEST)
-else
-	@echo "Running all tests..."
-	@for test in $(TEST_EXECUTABLES); do \
-	./$$test; \
-	done
-    endif
+run-test: tests
+	if [ "$(TEST)" = "" ]; then \
+	echo "Running all tests..."; \
+	for test in $(TEST_EXECUTABLES); do \
+		./$$test; \
+	done; \
+	else \
+	echo "Running specific test: $(TEST)"; \
+	./$(BIN_DIR)/$(TEST); \
+	fi
 
 # Debugging with gdb
 .PHONY: debug
