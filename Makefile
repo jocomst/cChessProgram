@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Iinclude -g # Added -g flag for debugging symbols
+CFLAGS = -Iinclude -Itests/include -g# Added -g flag for debugging symbols
 
 # Directories
 SRC_DIR = src
