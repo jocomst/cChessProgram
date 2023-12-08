@@ -25,29 +25,3 @@ void test_prompt_start_game(void) {
     fclose(input_stream);
 }
 
-// Define your test suite
-int main() {
-    // Initialize the CUnit test registry
-    if (CUE_SUCCESS != CU_initialize_registry())
-        return CU_get_error();
-
-    // Add suites to the registry
-    CU_pSuite suite = CU_add_suite("GameControllerTestSuite", NULL, NULL);
-    if (NULL == suite) {
-        CU_cleanup_registry();
-        return CU_get_error();
-    }
-
-    // Add tests to the suite
-    if ((NULL == CU_add_test(suite, "test of prompt_start_game()", test_prompt_start_game))) {
-        CU_cleanup_registry();
-        return CU_get_error();
-    }
-
-    // Run all tests using the CUnit Basic interface
-    CU_basic_set_mode(CU_BRM_VERBOSE);
-    CU_basic_run_tests();
-    CU_cleanup_registry();
-    return CU_get_error();
-}
-

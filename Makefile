@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Iinclude -Itests/include -g# Added -g flag for debugging symbols
+CFLAGS = -Iinclude -Itests/include -g # Added -g flag for debugging symbols
 
 # Directories
 SRC_DIR = src
@@ -12,46 +12,42 @@ TEST_DIR = tests
 
 # Source and object files
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
-OBJECTS = $(filter-out $(MAIN_OBJECT), $(SOURCES:.c=.o))
+OBJECTS = $(filter-out $(SRC_DIR)/main.o, $(SOURCES:.c=.o))
 EXECUTABLE = $(BIN_DIR)/chess-pgn-reader
 MAIN_OBJECT = $(SRC_DIR)/main.o
 
 # Test sources and objects
 TEST_SOURCES = $(wildcard $(TEST_DIR)/*.c)
 TEST_OBJECTS = $(TEST_SOURCES:.c=.o)
-TEST_EXECUTABLES = $(patsubst $(TEST_DIR)/%.c,$(BIN_DIR)/%,$(TEST_SOURCES))
+TEST_EXECUTABLE = $(BIN_DIR)/test_suite
 
 # Default target
 all: $(EXECUTABLE)
 
 # Linking the executable
-$(EXECUTABLE): $(OBJECTS) $(MAIN_OBJECT)
+$(EXECUTABLE): $(OBJECTS) $(MAIN_OBJECT) | $(BIN_DIR)
 	$(CC) $(CFLAGS) $^ -o $@
 
 # Compiling source files
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c | $(BIN_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Test targets
-.PHONY: tests
-tests: $(TEST_EXECUTABLES)
+# Compiling test objects
+$(TEST_DIR)/%.o: $(TEST_DIR)/%.c | $(BIN_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Linking the test executables
-$(BIN_DIR)/%: $(TEST_DIR)/%.o $(OBJECTS)
+# Linking the test suite executable
+$(TEST_EXECUTABLE): $(TEST_OBJECTS) $(filter-out $(MAIN_OBJECT), $(OBJECTS)) | $(BIN_DIR)
 	$(CC) $(CFLAGS) $^ -o $@ -lcunit
 
-# Running a specific test or all tests if no specific test is provided
+# Running the test suite
 .PHONY: run-test
-run-test: tests
-	if [ "$(TEST)" = "" ]; then \
-	echo "Running all tests..."; \
-	for test in $(TEST_EXECUTABLES); do \
-		./$$test; \
-	done; \
-	else \
-	echo "Running specific test: $(TEST)"; \
-	./$(BIN_DIR)/$(TEST); \
-	fi
+run-test: $(TEST_EXECUTABLE)
+	./$(TEST_EXECUTABLE)
+
+# Create bin directory if it doesn't exist
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
 # Debugging with gdb
 .PHONY: debug
@@ -63,5 +59,5 @@ clean:
 	rm -f $(SRC_DIR)/*.o $(BIN_DIR)/* $(TEST_DIR)/*.o
 
 # Phony targets
-.PHONY: all clean debug run-tests
+.PHONY: all clean debug run-test
 
