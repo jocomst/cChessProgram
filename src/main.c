@@ -1,6 +1,7 @@
 #include "chess_display.h"
 #include "chess_game_state.h"
 #include "game_controller.h"
+#include "chess_reader.h"
 #include <stdio.h>
 
 
@@ -24,6 +25,15 @@ int main() {
         initialize_board(&chessboard); 
         display_board(&chessboard);
         // Continue with game loop or next step of the game.
+        char moveInput[MAX_MOVE_NOTATION_LEN];
+        while (gameState.status == ONGOING) {
+            read_player_move(moveInput);
+            
+            // Further processing of the move
+            // ...
+
+        }
+        
     } else {
         // If the user chooses to quit, end the program.
         printf("Exiting the game. Thank you for playing!\n");
