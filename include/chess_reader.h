@@ -15,4 +15,7 @@ void read_player_move(char *input);
 // Function to parse the player's move from algebraic notation into board coordinates
 bool parse_algebraic_notation(const char *input, Move *move);
 
+// Function to validate if a string is a valid algebraic chess notation
+bool isValidNotation(const char *notation);
+
 #endif // CHESS_READER_H
