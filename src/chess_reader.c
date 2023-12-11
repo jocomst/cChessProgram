@@ -6,21 +6,34 @@
 #include "chess_reader.h"
 
 // Function to read the player's move in algebraic notation
+#include "chess_reader.h"
+
+// Function to read the player's move in algebraic notation and validate it
 void read_player_move(char *input) {
-    printf("Enter your move (in algebraic notation): ");
-    // Assuming that the input will not exceed 99 characters.
-    // fgets reads up to sizeof(input) - 1 characters and null-terminates the string.
-    if (fgets(input, 100, stdin) == NULL) {
-        printf("Error reading input.\n");
-        exit(1);
-    }
-    
-    // Optional: Remove newline character if present
-    size_t len = strlen(input);
-    if (len > 0 && input[len - 1] == '\n') {
-        input[len - 1] = '\0';
+    bool validInput = false;
+    while (!validInput) {
+        printf("Enter your move (in algebraic notation): ");
+
+        // fgets reads up to sizeof(input) - 1 characters and null-terminates the string.
+        if (fgets(input, 100, stdin) == NULL) {
+            printf("Error reading input. Please try again.\n");
+            continue;  // Prompt user to try again
+        }
+
+        // Remove newline character if present
+        size_t len = strlen(input);
+        if (len > 0 && input[len - 1] == '\n') {
+            input[len - 1] = '\0';
+        }
+
+        // Validate input
+        validInput = isValidNotation(input);
+        if (!validInput) {
+            printf("Invalid move format. Please enter a move in algebraic notation (e.g., 'e4', 'Nf3').\n");
+        }
     }
 }
+
 
 bool parse_algebraic_notation(const char *input, Move *move) {
     // Clear existing notation
