@@ -51,13 +51,13 @@ void set_square_notation(Square *square, int row, int col) {
 
 void display_board(const GameState *gameState) {
     int terminalWidth = get_terminal_width();
-    int boardWidth = (BOARD_SIZE * 2) + 4; // 2 characters per square and some padding for numbers/letters
+    int boardWidth = (BOARD_SIZE * 2) + 1; // 2 characters per square plus 1 for the row labels
     int leftPadding = (terminalWidth - boardWidth) / 2; // Calculate left padding to center the board
 
     const Chessboard *chessboard = &(gameState->chessboard);
 
     // Display column headers
-    printf("%*s", leftPadding, ""); // Center the board with padding
+    printf("%*s", leftPadding + 2, ""); // Offset by 2 spaces for the row numbers
     for (int col = 0; col < BOARD_SIZE; col++) {
         printf("%c ", 'a' + col); // Add space after each column letter
     }
@@ -65,27 +65,26 @@ void display_board(const GameState *gameState) {
 
     // Display each row
     for (int row = 0; row < BOARD_SIZE; row++) {
-        printf("%*s", leftPadding - 2, ""); // Account for row numbers in padding
+        printf("%*s", leftPadding, ""); // Align with left padding
         printf("%d ", BOARD_SIZE - row); // Display row number at the start with a space for alignment
 
         // Display pieces with spaces
         for (int col = 0; col < BOARD_SIZE; col++) {
-            printf(" "); // Print a space before each piece for alignment
             print_piece(chessboard->board[row][col].piece);
+            printf(" "); // Print a space after each piece for alignment
         }
 
         // Display row number at the end with a newline
-        printf(" %d\n", BOARD_SIZE - row);
+        printf("%d\n", BOARD_SIZE - row);
     }
 
     // Display column headers again
-    printf("%*s", leftPadding, ""); // Center the board with padding
+    printf("%*s", leftPadding + 2, ""); // Offset by 2 spaces for the row numbers
     for (int col = 0; col < BOARD_SIZE; col++) {
         printf("%c ", 'a' + col); // Add space after each column letter
     }
     printf("\n");
 }
-
 void display_game(const char *pgn) {
     GameState gameState;
     Chessboard chessboard;
