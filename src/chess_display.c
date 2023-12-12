@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>      // For STDOUT_FILENO
+#include <sys/ioctl.h>   // For ioctl and TIOCGWINSZ
 
 #include "chess_game_state.h"
 
@@ -9,6 +11,13 @@
 #define WHITE_PIECE_COLOR "\033[34m" // Blue color
 #define BLACK_PIECE_COLOR "\033[31m" // Red color
 #define BOARD_SIZE 8  // Assuming you have defined BOARD_SIZE
+
+// Function to get the current width of the terminal
+int get_terminal_width() {
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    return w.ws_col;
+}
 
 void print_piece(ChessPiece piece) {
     char displayChar;
@@ -41,24 +50,27 @@ void set_square_notation(Square *square, int row, int col) {
 }
 
 void display_board(const GameState *gameState) {
+    int terminalWidth = get_terminal_width();
+    int boardWidth = (BOARD_SIZE * 2) + 4; // 2 characters per square and some padding for numbers/letters
+    int leftPadding = (terminalWidth - boardWidth) / 2; // Calculate left padding to center the board
 
     const Chessboard *chessboard = &(gameState->chessboard);
 
     // Display column headers
-    printf("   ");  // Add extra space for alignment
+    printf("%*s", leftPadding, ""); // Center the board with padding
     for (int col = 0; col < BOARD_SIZE; col++) {
-        printf("%c ", 'a' + col);  // Add space after each column letter
+        printf("%c ", 'a' + col); // Add space after each column letter
     }
     printf("\n");
 
     // Display each row
     for (int row = 0; row < BOARD_SIZE; row++) {
-        // Display row number at the start with a space for alignment
-        printf("%d ", BOARD_SIZE - row);
+        printf("%*s", leftPadding - 2, ""); // Account for row numbers in padding
+        printf("%d ", BOARD_SIZE - row); // Display row number at the start with a space for alignment
 
         // Display pieces with spaces
         for (int col = 0; col < BOARD_SIZE; col++) {
-            printf(" ");  // Print a space before each piece for alignment
+            printf(" "); // Print a space before each piece for alignment
             print_piece(chessboard->board[row][col].piece);
         }
 
@@ -67,9 +79,9 @@ void display_board(const GameState *gameState) {
     }
 
     // Display column headers again
-    printf("   ");  // Add extra space for alignment
+    printf("%*s", leftPadding, ""); // Center the board with padding
     for (int col = 0; col < BOARD_SIZE; col++) {
-        printf("%c ", 'a' + col);  // Add space after each column letter
+        printf("%c ", 'a' + col); // Add space after each column letter
     }
     printf("\n");
 }
