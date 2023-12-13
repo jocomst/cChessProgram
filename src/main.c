@@ -25,9 +25,9 @@ int main() {
         initialize_board(&chessboard); 
         display_board(&chessboard);
         // Continue with game loop or next step of the game.
-        char moveInput[MAX_MOVE_NOTATION_LEN];
         while (gameState.status == ONGOING) {
-            read_player_move(moveInput);
+            char moveInput[MAX_MOVE_NOTATION_LEN];
+	read_player_move(moveInput, &gameState);
             
             // Further processing of the move
             // ...

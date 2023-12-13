@@ -4,17 +4,17 @@
 #include "string.h"
 #include "ctype.h"
 #include "chess_reader.h"
-
-// Function to read the player's move in algebraic notation
-#include "chess_reader.h"
+#include "chess_display.h" // This is where clear_screen and display_board are declared
+#include <unistd.h>       // For sleep function on Unix-like systems
 
 // Function to read the player's move in algebraic notation and validate it
-void read_player_move(char *input) {
+void read_player_move(char *input, const GameState *gameState) {
     bool validInput = false;
     while (!validInput) {
-        printf("Enter your move (in algebraic notation): ");
+        clear_screen(); // Clear the screen before redrawing the chessboard
+        display_board(&(gameState->chessboard)); // Pass the chessboard to display_board
 
-        // fgets reads up to sizeof(input) - 1 characters and null-terminates the string.
+        printf("Enter your move (in algebraic notation): ");
         if (fgets(input, 100, stdin) == NULL) {
             printf("Error reading input. Please try again.\n");
             continue;  // Prompt user to try again
@@ -30,9 +30,11 @@ void read_player_move(char *input) {
         validInput = isValidNotation(input);
         if (!validInput) {
             printf("Invalid move format. Please enter a move in algebraic notation (e.g., 'e4', 'Nf3').\n");
+            sleep(2); // Give the user time to read the message before the next prompt
         }
     }
 }
+
 
 
 bool parse_algebraic_notation(const char *input, Move *move) {
