@@ -94,6 +94,11 @@ void display_game(const char *pgn) {
     // ... (rest of the function)
 }
 
+void clear_screen() {
+    // ANSI escape code to clear the screen and reset cursor position
+    printf("\033[H\033[J");
+}
+
 void display_text(const char* text, int line_number) {
     // Move cursor to the beginning of the specified line
     printf("\033[%d;0H", line_number);
