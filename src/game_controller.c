@@ -6,9 +6,16 @@
 #include <ctype.h> // For tolower function
 
 void start_game_loop(GameState *gameState) {
+
     // The previous game loop logic goes here
     while (gameState->status == ONGOING) {
         // Get input, process moves, update gameState, display the board
+	char moveInput[MAX_MOVE_NOTATION_LEN];
+
+	read_player_move(moveInput, &gameState);
+            // Further processing of the move
+
+            // ...
         // Check for endgame conditions
     }
     // Display end of game message
