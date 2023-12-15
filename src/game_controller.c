@@ -28,7 +28,7 @@ void start_game_loop(GameState *gameState) {
     // Display end of game message
 }
 
-bool prompt_start_game(GameState *gameState) {
+bool prompt_start_game() {
     char input[100];
     while (true) {  // Use an infinite loop and break out based on conditions
         printf("\033[2K\r");  // Clear the line and carriage return
