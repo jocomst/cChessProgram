@@ -7,8 +7,6 @@
 
 
 int main() {
-
-    Chessboard chessboard;
     
     // 1. Display the ASCII art intro screen.
     display_intro_screen();
@@ -22,7 +20,7 @@ int main() {
     
     if (gameStarted) {
         // 3. If the user starts the game, display the chessboard and proceed.
-        start_game_loop(gameState);
+        start_game_loop(&gameState);
         
     } else {
         // If the user chooses to quit, end the program.

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "game_controller.h"
 #include "chess_display.h"
+#include "chess_reader.h"
 #include <stdio.h>
 #include <ctype.h> // For tolower function
 
@@ -10,13 +11,14 @@ void start_game_loop(GameState *gameState) {
     // The previous game loop logic goes here
 
     while (gameState->status == ONGOING) {
+    	Chessboard chessboard;
 	initialize_board(&chessboard); 
         display_board(&chessboard);
 
         // Get input, process moves, update gameState, display the board
 	char moveInput[MAX_MOVE_NOTATION_LEN];
 
-	read_player_move(moveInput, &gameState);
+	read_player_move(moveInput, gameState);
 
             // Further processing of the move
             // ...
