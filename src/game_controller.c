@@ -8,14 +8,19 @@
 void start_game_loop(GameState *gameState) {
 
     // The previous game loop logic goes here
+
     while (gameState->status == ONGOING) {
+	initialize_board(&chessboard); 
+        display_board(&chessboard);
+
         // Get input, process moves, update gameState, display the board
 	char moveInput[MAX_MOVE_NOTATION_LEN];
 
 	read_player_move(moveInput, &gameState);
-            // Further processing of the move
 
+            // Further processing of the move
             // ...
+
         // Check for endgame conditions
     }
     // Display end of game message

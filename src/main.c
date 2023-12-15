@@ -22,17 +22,7 @@ int main() {
     
     if (gameStarted) {
         // 3. If the user starts the game, display the chessboard and proceed.
-        initialize_board(&chessboard); 
-        display_board(&chessboard);
-        // Continue with game loop or next step of the game.
-        while (gameState.status == ONGOING) {
-            char moveInput[MAX_MOVE_NOTATION_LEN];
-	read_player_move(moveInput, &gameState);
-            
-            // Further processing of the move
-            // ...
-
-        }
+        start_game_loop(gameState);
         
     } else {
         // If the user chooses to quit, end the program.
