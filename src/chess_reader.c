@@ -54,48 +54,22 @@ bool parse_algebraic_notation(const char *input, Move *move) {
 bool isValidNotation(const char *notation) {
     int len = strlen(notation);
 
-    // Basic validation: Length check
-    if (len < 2 || len > 6) {
+    // Standard chess notation should be exactly 4 characters (e.g., "e2e4")
+    if (len != 4) {
         return false;
     }
 
-    // Validating different types of moves
-    if (islower(notation[0])) {  // Pawn moves and captures (e.g., "e4", "exd5")
-        if (len == 2 && isdigit(notation[1])) {
-            return true;  // Simple pawn move
-        }
-        if (len == 4 && notation[1] == 'x' && 
-            islower(notation[2]) && isdigit(notation[3])) {
-            return true;  // Pawn capture
-        }
-        if (len == 5 && notation[1] == 'x' && 
-            islower(notation[2]) && isdigit(notation[3]) && notation[4] == '+') {
-            return true;  // Pawn capture with check
-        }
-    } else if (strchr("KQBNR", notation[0])) {  // Piece moves (e.g., "Nf3")
-        if (len == 3 && islower(notation[1]) && isdigit(notation[2])) {
-            return true;  // Simple piece move
-        }
-        if (len == 4 && notation[1] == 'x' && 
-            islower(notation[2]) && isdigit(notation[3])) {
-            return true;  // Piece capture
-        }
-        if (len == 5 && notation[1] == 'x' && 
-            islower(notation[2]) && isdigit(notation[3]) && notation[4] == '+') {
-            return true;  // Piece capture with check
-        }
-        if (len == 6 && notation[1] == 'x' && 
-            islower(notation[2]) && isdigit(notation[3]) && notation[4] == '=' &&
-            strchr("QBNR", notation[5])) {
-            return true;  // Pawn promotion with capture
-        }
+    // Validate the format: [letter][number][letter][number]
+    // e.g., "e2e4"
+    if (!islower(notation[0]) || !isdigit(notation[1]) ||
+        !islower(notation[2]) || !isdigit(notation[3])) {
+        return false;
     }
 
-    // Castling (e.g., "O-O", "O-O-O")
-    if ((strcmp(notation, "O-O") == 0) || (strcmp(notation, "O-O-O") == 0)) {
-        return true;
-    }
+    // Further checks can be added here for specific rules, like:
+    // - The starting square must not be the same as the ending square.
+    // - The letter must be between 'a' and 'h', and the number must be between '1' and '8'.
 
-    // If none of the conditions are met, return false
-    return false;
+    return true; // The notation is valid
 }
+
