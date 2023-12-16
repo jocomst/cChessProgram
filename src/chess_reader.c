@@ -29,7 +29,7 @@ void read_player_move(char *input, const GameState *gameState) {
         // Validate input
         validInput = isValidNotation(input);
         if (!validInput) {
-            printf("Invalid move format. Please enter a move in algebraic notation (e.g., 'e4', 'Nf3').\n");
+            printf("Invalid move format. Please enter a move in standard notation (e.g., 'e2e4', 'g1f3').\n");
             sleep(2); // Give the user time to read the message before the next prompt
         }
     }
@@ -37,18 +37,23 @@ void read_player_move(char *input, const GameState *gameState) {
 
 
 
-bool parse_algebraic_notation(const char *input, Move *move) {
-    // Clear existing notation
-    memset(move->notation, 0, MAX_MOVE_NOTATION_LEN);
+bool parse_standard_notation(const char *input, Move *move) {
+    // Validate the input length and format here as needed
 
-    // Validate and copy the input into the move notation
-    // Example validation: Check if the input is a valid algebraic notation
-    if (isValidNotation(input)) {  // You need to implement isValidNotation
-        strncpy(move->notation, input, MAX_MOVE_NOTATION_LEN - 1);
+    // Parse the input to extract start and end positions
+    // Example for standard chess notation: "e2e4"
+    if (strlen(input) == 4 && islower(input[0]) && isdigit(input[1]) && 
+        islower(input[2]) && isdigit(input[3])) {
+
+        move->startCol = input[0] - 'a';
+        move->startRow = '8' - input[1];
+        move->endCol = input[2] - 'a';
+        move->endRow = '8' - input[3];
+
         return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 bool isValidNotation(const char *notation) {
