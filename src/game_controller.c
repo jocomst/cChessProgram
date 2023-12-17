@@ -11,9 +11,7 @@ void start_game_loop(GameState *gameState) {
     // The previous game loop logic goes here
 
     while (gameState->status == ONGOING) {
-    	Chessboard chessboard;
-	initialize_board(&chessboard); 
-        display_board(&chessboard);
+    	display_board(gameState); // Display the board from the gameState
 
         // Get input, process moves, update gameState, display the board
 	char moveInput[MAX_MOVE_NOTATION_LEN];

@@ -12,7 +12,7 @@ void read_player_move(char *input, const GameState *gameState) {
     bool validInput = false;
     while (!validInput) {
         clear_screen(); // Clear the screen before redrawing the chessboard
-        display_board(&(gameState->chessboard)); // Pass the chessboard to display_board
+        display_board(gameState); // Pass the chessboard to display_board
 
         printf("Enter your move (in algebraic notation): ");
         if (fgets(input, 100, stdin) == NULL) {
