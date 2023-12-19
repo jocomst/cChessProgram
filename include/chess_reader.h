@@ -16,8 +16,8 @@ typedef struct {
 // Function to read the player's move in algebraic notation
 void read_player_move(char *input, const GameState *gameState);
 
-// Function to parse the player's move from algebraic notation into board coordinates
-bool parse_standard_notation(const char *input, Move *move);
+// Function to parse the player's move from standard notation into move struct
+Move parse_standard_notation(const char *input);
 
 // Function to validate if a string is a valid algebraic chess notation
 bool isValidNotation(const char *notation);
