@@ -37,23 +37,27 @@ void read_player_move(char *input, const GameState *gameState) {
 
 
 
-bool parse_standard_notation(const char *input, Move *move) {
-    // Validate the input length and format here as needed
+Move parse_standard_notation(const char *input) {
+    Move move;
 
-    // Parse the input to extract start and end positions
-    // Example for standard chess notation: "e2e4"
-    if (strlen(input) == 4 && islower(input[0]) && isdigit(input[1]) && 
+    // Initialize default values for the Move struct
+    move.startRow = -1;
+    move.startCol = -1;
+    move.endRow = -1;
+    move.endCol = -1;
+
+    // Validate and parse the input
+    if (strlen(input) == 4 && 
+        islower(input[0]) && isdigit(input[1]) && 
         islower(input[2]) && isdigit(input[3])) {
 
-        move->startCol = input[0] - 'a';
-        move->startRow = '8' - input[1];
-        move->endCol = input[2] - 'a';
-        move->endRow = '8' - input[3];
-
-        return true;
+        move.startCol = input[0] - 'a';
+        move.startRow = '8' - input[1];
+        move.endCol = input[2] - 'a';
+        move.endRow = '8' - input[3];
     }
 
-    return false;
+    return move;
 }
 
 bool isValidNotation(const char *notation) {
