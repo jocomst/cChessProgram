@@ -21,6 +21,14 @@ typedef struct {
     int has_moved; // 0 for no, 1 for yes - useful for pawns and castling logic
 } ChessPiece;
 
+typedef struct {
+    int startRow;
+    int startCol;
+    int endRow;
+    int endCol;
+    // Other fields as needed, such as promotion piece type
+} Move;
+
 // Function declarations
 void initialize_pieces(Chessboard *chessboard);
 void move_piece(Chessboard *chessboard, int start_row, int start_col, int end_row, int end_col);
