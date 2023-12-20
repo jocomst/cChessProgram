@@ -33,6 +33,7 @@ typedef struct {
 void initialize_pieces(Chessboard *chessboard);
 void move_piece(Chessboard *chessboard, int start_row, int start_col, int end_row, int end_col);
 int is_move_legal(const Chessboard *chessboard, int start_row, int start_col, int end_row, int end_col);
-// Add more function declarations as needed for your chess logic
+// Function to check if a square is occupied based on GameState and Move
+bool is_square_occupied(const GameState *gameState, const Move *move);
 
 #endif // CHESS_LOGIC_H
