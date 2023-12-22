@@ -18,7 +18,7 @@ typedef enum {
 typedef struct {
     PieceType type;
     char color; // 'W' for white, 'B' for black
-    int has_moved; // 0 for no, 1 for yes - useful for pawns and castling logic
+    bool has_moved; 
 } ChessPiece;
 
 typedef struct {
