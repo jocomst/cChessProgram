@@ -2,10 +2,6 @@
 #include "chess_reader.h"
 #include <string.h>
 
-void apply_move(Chessboard *chessboard, const char *move) {
-    // TODO: Implement function to apply a chess move to the board.
-}
-
 bool is_square_occupied(const GameState *gameState, const Move *move) {
     int row = move->startRow;
     int col = move->startCol;
@@ -21,3 +17,20 @@ bool has_piece_moved(const GameState *gameState, const Move *move) {
     return piece->has_moved;
 }
 
+void apply_move(GameState *gameState, const Move *move) {
+    Chessboard *chessboard = &gameState->chessboard;
+    ChessPiece *startSquare = &chessboard->board[move->startRow][move->startCol].piece;
+    ChessPiece *endSquare = &chessboard->board[move->endRow][move->endCol].piece;
+
+    // Move the piece
+    *endSquare = *startSquare;
+
+    // Mark the start square as empty
+    startSquare->type = EMPTY;
+    startSquare->color = NONE;
+
+    // Mark the piece as having moved
+    endSquare->has_moved = true;
+
+    // TODO: Add any special move logic (e.g., en passant, castling, promotion)
+}

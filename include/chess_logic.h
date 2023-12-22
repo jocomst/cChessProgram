@@ -36,5 +36,6 @@ int is_move_legal(const Chessboard *chessboard, int start_row, int start_col, in
 // Function to check if a square is occupied based on GameState and Move
 bool is_square_occupied(const GameState *gameState, const Move *move);
 bool has_piece_moved(const GameState *gameState, const Move *move);
+void apply_move(GameState *gameState, const Move *move);
 
 #endif // CHESS_LOGIC_H
