@@ -15,3 +15,9 @@ bool is_square_occupied(const GameState *gameState, const Move *move) {
     }
     return false; // Return false if coordinates are out of bounds
 }
+
+bool has_piece_moved(const GameState *gameState, const Move *move) {
+    const ChessPiece *piece = &gameState->chessboard.board[move->startRow][move->startCol].piece;
+    return piece->has_moved;
+}
+
