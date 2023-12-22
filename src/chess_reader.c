@@ -8,15 +8,15 @@
 #include <unistd.h>       // For sleep function on Unix-like systems
 
 // Function to read the player's move in algebraic notation and validate it
-void read_player_move(char *input, const GameState *gameState) {
-    bool validInput = false;
-    while (!validInput) {
+bool read_player_move(char *input, const GameState *gameState) {
+    while (true) {
         clear_screen(); // Clear the screen before redrawing the chessboard
         display_board(gameState); // Pass the chessboard to display_board
 
-        printf("Enter your move (in algebraic notation): ");
+        printf("Enter your move (in standard notation), or type 'quit' to exit: ");
         if (fgets(input, 100, stdin) == NULL) {
             printf("Error reading input. Please try again.\n");
+            sleep(2); // Give the user time to read the message
             continue;  // Prompt user to try again
         }
 
@@ -26,14 +26,21 @@ void read_player_move(char *input, const GameState *gameState) {
             input[len - 1] = '\0';
         }
 
+        // Check for quit command
+        if (strcmp(input, "quit") == 0) {
+            return false; // User chose to quit
+        }
+
         // Validate input
-        validInput = isValidNotation(input);
-        if (!validInput) {
+        if (isValidNotation(input)) {
+            return true; // Valid move format
+        } else {
             printf("Invalid move format. Please enter a move in standard notation (e.g., 'e2e4', 'g1f3').\n");
-            sleep(2); // Give the user time to read the message before the next prompt
+            sleep(2); // Give the user time to read the message
         }
     }
 }
+
 
 
 

@@ -14,7 +14,7 @@ typedef struct {
 } Move;
 
 // Function to read the player's move in algebraic notation
-void read_player_move(char *input, const GameState *gameState);
+bool read_player_move(char *input, const GameState *gameState);
 
 // Function to parse the player's move from standard notation into move struct
 Move parse_standard_notation(const char *input);
