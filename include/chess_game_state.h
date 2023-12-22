@@ -17,6 +17,7 @@ typedef enum {
 typedef struct {
     PieceType type;
     PlayerColor color;
+    bool has_moved;
 } ChessPiece;
 
 // Modify your Square structure to include ChessPiece
