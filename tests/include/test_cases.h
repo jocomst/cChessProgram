@@ -13,7 +13,10 @@ void test_initialize_game_state(void);
 // Declarations of test functions from test_game_controller.c
 void test_prompt_start_game(void);
 
-// You can add more declarations as you create more test functions.
+// Add declarations for your new test functions in test_chess_logic.c
+void test_is_square_occupied(void);
+void test_has_piece_moved(void);
+void test_apply_move(void);
 
 #endif // TEST_CASES_H
 
