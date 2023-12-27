@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "chess_display.h"
 #include "chess_reader.h"
+#include "chess_logic.h"
 #include "game_controller.h"  // Assuming this includes or indirectly includes all necessary type definitions
 
 // Define your test functions
