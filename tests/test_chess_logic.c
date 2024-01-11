@@ -61,5 +61,32 @@ void test_apply_move(void) {
     CU_ASSERT_TRUE(/* conditions to verify the move */);
 }
 
+void test_pawn_move(void) {
+    GameState testGameState;
+    Move testMove;
+
+    // Set up mock data for the initial position of the pawn
+    // ...
+
+    // Test for moving one square forward
+    testMove.endRow = testMove.startRow + 1;
+    testMove.endCol = testMove.startCol;
+    apply_move(&testGameState, &testMove);
+    CU_ASSERT_TRUE(/* conditions to verify the one-square move */);
+
+    // Reset GameState for the initial position
+    // ...
+
+    // Test for moving two squares forward on first move
+    testMove.endRow = testMove.startRow + 2;
+    testMove.endCol = testMove.startCol;
+    apply_move(&testGameState, &testMove);
+    CU_ASSERT_TRUE(/* conditions to verify the two-square move */);
+
+    // Additional tests for obstruction or invalid moves
+    // ...
+}
+
+
 // main() function is as you've described
 
