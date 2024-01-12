@@ -2,6 +2,7 @@
 #define CHESS_DISPLAY_H
 
 #include "chess_game_state.h"
+#include "chess_types.h"
 
 // Function declarations
 void display_board(const GameState *gameState);

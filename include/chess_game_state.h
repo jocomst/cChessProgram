@@ -2,6 +2,7 @@
 #define CHESS_GAME_STATE_H
 
 #include <stdbool.h>
+#include "chess_types.h"
 #define BOARD_SIZE 8
 
 
