@@ -1,7 +1,6 @@
 #ifndef CHESS_LOGIC_H
 #define CHESS_LOGIC_H
 
-#include "chess_game_state.h"
 
 // Enum to represent the types of chess pieces
 typedef enum {
