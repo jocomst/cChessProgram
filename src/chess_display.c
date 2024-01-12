@@ -5,6 +5,7 @@
 #include <sys/ioctl.h>   // For ioctl and TIOCGWINSZ
 
 #include "chess_game_state.h"
+#include "chess_logic.h"
 
 // ANSI color codes
 #define RESET_COLOR "\033[0m"
