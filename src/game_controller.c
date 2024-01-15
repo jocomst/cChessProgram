@@ -1,29 +1,49 @@
 // game_controller.c
 #include <stdlib.h>
 #include "game_controller.h"
+#include "chess_logic.h"
 #include "chess_display.h"
 #include "chess_reader.h"
 #include <stdio.h>
 #include <ctype.h> // For tolower function
 
 void start_game_loop(GameState *gameState) {
-
-    // The previous game loop logic goes here
-
     while (gameState->status == ONGOING) {
-    	display_board(gameState); // Display the board from the gameState
+        char moveInput[MAX_MOVE_NOTATION_LEN];
 
-        // Get input, process moves, update gameState, display the board
-	char moveInput[MAX_MOVE_NOTATION_LEN];
+        // Display the board before asking for the player's move
+        display_board(gameState);
 
-	read_player_move(moveInput, gameState);
+        // Get the player's move
+        if (read_player_move(moveInput, gameState)) {
+            // Parse the move from standard notation to the Move structure
+            Move move = parse_standard_notation(moveInput);
 
-            // Further processing of the move
+            // Since we're not checking if the move is legal, apply it directly
+            apply_move(gameState, &move);
+
+            // Switch players or perform any additional updates needed after a move
             // ...
 
-        // Check for endgame conditions
+            // Update the display after the move
+            display_board(gameState);
+        } else {
+            // Handle 'quit' or other non-move input
+            // ...
+        }
+
+        // Here you can check for endgame conditions and update gameState->status
+        // ...
+
+        // If the game is over, you can break out of the loop
+        // if (game_over_condition) {
+        //     gameState->status = END_CONDITION;
+        //     break;
+        // }
     }
+
     // Display end of game message
+    // ...
 }
 
 bool prompt_start_game() {

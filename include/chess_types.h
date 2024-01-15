@@ -31,6 +31,14 @@ typedef struct {
     char notation[3];  // Enough space for two characters and a null-terminator
 } Square;
 
+typedef struct {
+    int startRow;
+    int startCol;
+    int endRow;
+    int endCol;
+    // Other fields as needed, such as promotion piece type
+} Move;
+
 // Structure to represent a chessboard
 typedef struct {
     Square board[BOARD_SIZE][BOARD_SIZE];
