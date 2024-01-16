@@ -38,29 +38,43 @@ void apply_move(GameState *gameState, const Move *move) {
 
 bool pawn_move(GameState *gameState, const Move *move) {
     // Check if the moving piece is a pawn
-    ChessPiece *piece = &gameState->chessboard.board[move->startRow][move->startCol].piece;
-    if (piece->type != PAWN) {
-        return false;
+    ChessPiece *startPiece = &gameState->chessboard.board[move->startRow][move->startCol].piece;
+    if (startPiece->type != PAWN) {
+return false;
+}
+
+    // Check if the start square is occupied by a pawn of the correct color
+if (startPiece->color != gameState->currentPlayer) {
+    return false;
+}
+
+// Calculate move distance and direction
+int moveDistance = move->endRow - move->startRow;
+int direction = (startPiece->color == WHITE) ? 1 : -1; // White pawns move up (1), black pawns move down (-1)
+
+// Check for valid forward move
+if (move->startCol == move->endCol) {
+    if ((moveDistance == direction && !is_square_occupied(gameState, move)) || 
+        (moveDistance == 2 * direction && !startPiece->has_moved && 
+         !is_square_occupied(gameState, move))) { // Check the square passed over
+        // Apply the move
+        apply_move(gameState, move);
+        return true;
     }
+}
 
-    // Check move direction and distance
-    int moveDistance = move->endRow - move->startRow;
-    if (piece->color == WHITE && moveDistance <= 0) return false; // White pawns move upwards (row number decreases)
-    if (piece->color == BLACK && moveDistance >= 0) return false; // Black pawns move downwards (row number increases)
-    if (abs(moveDistance) > 2 || (abs(moveDistance) == 2 && piece->has_moved)) return false; // Pawns can move two squares only from starting position
-
-    // Check for capture if the move is diagonal
-    if (move->startCol != move->endCol) {
-        // Capture logic here...
+// Check for valid capture move
+if (abs(move->startCol - move->endCol) == 1 && moveDistance == direction) {
+    ChessPiece *endPiece = &gameState->chessboard.board[move->endRow][move->endCol].piece;
+    if (endPiece->type != EMPTY && endPiece->color != startPiece->color) {
+        // Apply the capture move
+        apply_move(gameState, move);
+        return true;
     }
+}
 
-    // Check for obstruction in case of a two-square move
-    if (abs(moveDistance) == 2) {
-        // Check path obstruction here...
-    }
+// Pawn moves are invalid in all other cases
+return false;
 
-    // Apply the move
-    apply_move(gameState, move);
-    return true;
 }
 
