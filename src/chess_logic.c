@@ -78,3 +78,11 @@ return false;
 
 }
 
+void switch_player(GameState *gameState) {
+    if (gameState->currentPlayer == WHITE) {
+        gameState->currentPlayer = BLACK;
+    } else {
+        gameState->currentPlayer = WHITE;
+    }
+}
+

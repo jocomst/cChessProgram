@@ -13,5 +13,6 @@ bool is_square_occupied(const GameState *gameState, const Move *move);
 bool has_piece_moved(const GameState *gameState, const Move *move);
 void apply_move(GameState *gameState, const Move *move);
 bool pawn_move(GameState *gameState, const Move *move);
+void switch_player(GameState *gameState);
 
 #endif // CHESS_LOGIC_H
