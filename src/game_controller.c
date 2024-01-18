@@ -11,40 +11,36 @@ void start_game_loop(GameState *gameState) {
     while (gameState->status == ONGOING) {
         char moveInput[MAX_MOVE_NOTATION_LEN];
 
-        // Display the board before asking for the player's move
-        display_board(gameState);
+        display_board(gameState); // Display the board
 
-        // Get the player's move
         if (read_player_move(moveInput, gameState)) {
-            // Parse the move from standard notation to the Move structure
             Move move = parse_standard_notation(moveInput);
 
-            // Since we're not checking if the move is legal, apply it directly
-            apply_move(gameState, &move);
+            ChessPiece *piece = &gameState->chessboard.board[move.startRow][move.startCol].piece;
+            if (piece->color == gameState->currentPlayer) {
+                apply_move(gameState, &move);  // Apply the move
+                switch_player(gameState);     // Switch the player
+            } else {
+                printf("You can only move your own pieces. It's %c's turn.\n", 
+                       gameState->currentPlayer == WHITE ? 'W' : 'B');
+                // You might want to wait a bit or clear this message in the next screen refresh
+                continue; // Skip to the next iteration of the loop
+            }
 
-            // Switch players or perform any additional updates needed after a move
-            // ...
-
-            // Update the display after the move
-            display_board(gameState);
+            display_board(gameState); // Update the display after the move
         } else {
             // Handle 'quit' or other non-move input
             // ...
         }
 
-        // Here you can check for endgame conditions and update gameState->status
-        // ...
+        // Check for endgame conditions
 
-        // If the game is over, you can break out of the loop
-        // if (game_over_condition) {
-        //     gameState->status = END_CONDITION;
-        //     break;
-        // }
     }
 
     // Display end of game message
     // ...
 }
+
 
 bool prompt_start_game() {
     char input[100];
