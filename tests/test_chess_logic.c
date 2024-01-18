@@ -95,6 +95,22 @@ CU_ASSERT_TRUE(startSquareEmpty);
 CU_ASSERT_TRUE(endSquareOccupied);
 }
 
+void test_switch_player(void) {
+    GameState testGameState;
 
-// main() function is as you've described
+    // Set up mock data for the test
+    // Initialize the current player
+    testGameState.currentPlayer = WHITE;
+
+    // Apply the switch_player function
+    switch_player(&testGameState);
+
+    // Assert that the current player has been switched to BLACK
+    CU_ASSERT_EQUAL(testGameState.currentPlayer, BLACK);
+
+    // Switch again and assert it's WHITE now
+    switch_player(&testGameState);
+    CU_ASSERT_EQUAL(testGameState.currentPlayer, WHITE);
+}
+
 
