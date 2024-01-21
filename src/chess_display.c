@@ -64,8 +64,8 @@ void display_board(const GameState *gameState) {
     }
     printf("\n");
 
-    // Display each row in reverse order
-    for (int row = BOARD_SIZE - 1; row >= 0; row--) {
+    // Display each row
+    for (int row = 0; row < BOARD_SIZE; row++) {
         printf("%*s", leftPadding, ""); // Align with left padding
         printf("%d ", BOARD_SIZE - row); // Display row number at the start with a space for alignment
 
@@ -86,6 +86,8 @@ void display_board(const GameState *gameState) {
     }
     printf("\n");
 }
+
+
 
 void display_game(const char *pgn) {
     GameState gameState;
