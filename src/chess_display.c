@@ -67,7 +67,7 @@ void display_board(const GameState *gameState) {
     // Display each row in reverse order
     for (int row = BOARD_SIZE - 1; row >= 0; row--) {
         printf("%*s", leftPadding, ""); // Align with left padding
-        printf("%d ", BOARD_SIZE - row); // Display row number at the start with a space for alignment
+        printf("%d ", 8 - row); // Display row number with 8 at the top going down to 1
 
         // Display pieces with spaces
         for (int col = 0; col < BOARD_SIZE; col++) {
@@ -76,7 +76,7 @@ void display_board(const GameState *gameState) {
         }
 
         // Display row number at the end with a newline
-        printf("%d\n", BOARD_SIZE - row);
+        printf("%d\n", 8 - row);
     }
 
     // Display column headers again
@@ -86,6 +86,7 @@ void display_board(const GameState *gameState) {
     }
     printf("\n");
 }
+
 
 
 
