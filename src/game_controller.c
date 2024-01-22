@@ -8,38 +8,42 @@
 #include <ctype.h> // For tolower function
 
 void start_game_loop(GameState *gameState) {
-    while (gameState->status == ONGOING) {
-        char moveInput[MAX_MOVE_NOTATION_LEN];
+    // Ensure the game starts with white's turn
+    gameState->currentPlayer = WHITE;
 
+    while (gameState->status == ONGOING) {
         display_board(gameState); // Display the board
 
+        // Debugging: print out the current player
+        printf("Current player: %s\n", gameState->currentPlayer == WHITE ? "White" : "Black");
+
+        char moveInput[MAX_MOVE_NOTATION_LEN];
         if (read_player_move(moveInput, gameState)) {
             Move move = parse_standard_notation(moveInput);
 
+            // Verify that the piece color matches the current player
             ChessPiece *piece = &gameState->chessboard.board[move.startRow][move.startCol].piece;
             if (piece->color == gameState->currentPlayer) {
                 apply_move(gameState, &move);  // Apply the move
-                switch_player(gameState);     // Switch the player
+                switch_player(gameState);      // Switch the player
             } else {
-                printf("You can only move your own pieces. It's %c's turn.\n", 
-                       gameState->currentPlayer == WHITE ? 'W' : 'B');
-                // You might want to wait a bit or clear this message in the next screen refresh
+                printf("It's not your turn to move that piece. Please enter a move for the %s pieces.\n", 
+                       gameState->currentPlayer == WHITE ? "white" : "black");
                 continue; // Skip to the next iteration of the loop
             }
-
-            display_board(gameState); // Update the display after the move
         } else {
             // Handle 'quit' or other non-move input
-            // ...
+            break;
         }
 
         // Check for endgame conditions
-
+        // ...
     }
 
     // Display end of game message
     // ...
 }
+
 
 
 bool prompt_start_game() {

@@ -9,8 +9,8 @@
 
 // ANSI color codes
 #define RESET_COLOR "\033[0m"
-#define WHITE_PIECE_COLOR "\033[34m" // Blue color
-#define BLACK_PIECE_COLOR "\033[31m" // Red color
+#define BLACK_PIECE_COLOR "\033[34m" // Blue color
+#define WHITE_PIECE_COLOR "\033[31m" // Red color
 #define BOARD_SIZE 8  // Assuming you have defined BOARD_SIZE
 
 // Function to get the current width of the terminal
@@ -64,8 +64,8 @@ void display_board(const GameState *gameState) {
     }
     printf("\n");
 
-    // Display each row
-    for (int row = 0; row < BOARD_SIZE; row++) {
+    // Display each row in reverse order
+    for (int row = BOARD_SIZE - 1; row >= 0; row--) {
         printf("%*s", leftPadding, ""); // Align with left padding
         printf("%d ", BOARD_SIZE - row); // Display row number at the start with a space for alignment
 
